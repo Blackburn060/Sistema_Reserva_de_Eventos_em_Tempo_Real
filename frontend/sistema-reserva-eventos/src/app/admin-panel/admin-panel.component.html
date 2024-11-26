@@ -1,0 +1,62 @@
+<div class="container">
+  <h2 class="title">Administração de Eventos</h2>
+
+  <!-- Formulário de Criação de Eventos -->
+  <form (submit)="createEvent()" class="form">
+    <div class="form-group">
+      <label for="eventName">Nome do Evento:</label>
+      <input
+        id="eventName"
+        type="text"
+        [(ngModel)]="newEvent.name"
+        placeholder="Nome do Evento"
+        name="eventName"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="eventSlots">Vagas:</label>
+      <input
+        id="eventSlots"
+        type="number"
+        [(ngModel)]="newEvent.slots"
+        placeholder="Quantidade de Vagas"
+        name="eventSlots"
+        min="1"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="eventDate">Data do Evento:</label>
+      <input
+        id="eventDate"
+        type="date"
+        [(ngModel)]="newEvent.date"
+        name="eventDate"
+        required
+      />
+    </div>
+    <button type="submit" class="btn-create">Criar Evento</button>
+  </form>
+
+  <!-- Lista de Eventos -->
+  <div class="events-list">
+    <h3 class="subtitle">Eventos Cadastrados</h3>
+    <div class="event-item" *ngFor="let event of events">
+      <div class="event-info">
+        <p>
+          <strong>{{ event.name }}</strong> - {{ event.slots }} vagas -
+          {{ event.date | date : "dd/MM/yyyy" }}
+        </p>
+      </div>
+      <button class="btn-delete" (click)="deleteEvent(event.id)">
+        Excluir
+      </button>
+    </div>
+  </div>
+
+  <!-- Caso não haja eventos -->
+  <div *ngIf="events.length === 0" class="no-events">
+    <p>Nenhum evento cadastrado no momento.</p>
+  </div>
+</div>

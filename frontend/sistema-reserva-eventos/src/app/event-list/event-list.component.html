@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="header">
+    <h2>Eventos Disponíveis</h2>
+    <p>Usuários conectados: {{ usersOnline }}</p>
+  </div>
+
+  <div class="content">
+    <!-- Grid de Eventos -->
+    <div class="events-grid">
+      <app-event-card
+        *ngFor="let event of events"
+        [event]="event"
+      ></app-event-card>
+    </div>
+
+    <!-- Fila de Espera -->
+    <div class="queue">
+      <h3>Fila de Espera</h3>
+      <ul>
+        <li *ngFor="let user of queue; let i = index" class="queue-item">
+          <span [class.priority]="i < 3">{{ user }}</span>
+          <span *ngIf="i < 3">
+            - Tempo restante: <strong>{{ timers[user] || 0 }}</strong>s
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

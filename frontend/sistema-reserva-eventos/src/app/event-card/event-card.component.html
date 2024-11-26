@@ -1,0 +1,12 @@
+<mat-card class="event-card">
+  <h3>{{ event.name }}</h3>
+  <p>
+    Data do Evento: <strong>{{ event.date | date : "dd/MM/yyyy" }}</strong>
+  </p>
+  <p>
+    Vagas disponíveis: <strong>{{ event.slots }}</strong>
+  </p>
+  <button mat-raised-button color="primary" (click)="reserve()">
+    Reservar
+  </button>
+</mat-card>
