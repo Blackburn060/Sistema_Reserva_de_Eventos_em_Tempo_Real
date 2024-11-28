@@ -7,7 +7,7 @@
 
 .title {
   text-align: center;
-  color: #1e40af; /* Azul */
+  color: #1e40af;
   margin-bottom: 20px;
 }
 
@@ -16,7 +16,7 @@
   flex-direction: column;
   gap: 15px;
   margin-bottom: 30px;
-  background-color: #f8f9fa; /* Fundo leve */
+  background-color: #f8f9fa;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -30,30 +30,24 @@
 
 .form-group label {
   font-weight: bold;
-  color: #374151; /* Cinza escuro */
+  color: #374151;
 }
 
 .form-group input {
   padding: 8px;
-  border: 1px solid #d1d5db; /* Cinza claro */
+  border: 1px solid #d1d5db;
   border-radius: 4px;
   font-size: 14px;
 }
 
 .btn-create {
   padding: 10px 20px;
-  background-color: #3b82f6; /* Azul */
+  background-color: #3b82f6;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  text-align: center;
-  transition: background-color 0.2s ease;
-}
-
-.btn-create:hover {
-  background-color: #2563eb; /* Azul escuro */
 }
 
 .events-list {
@@ -62,41 +56,24 @@
 
 .subtitle {
   margin-bottom: 15px;
-  color: #111827; /* Cinza escuro */
+  color: #111827;
 }
 
 .event-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e5e7eb; /* Fundo cinza claro */
+  background-color: #e5e7eb;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
 }
 
-.event-info {
-  font-size: 14px;
-  color: #374151; /* Cinza escuro */
-}
-
 .btn-delete {
   padding: 6px 12px;
-  background-color: #ef4444; /* Vermelho */
+  background-color: #ef4444;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.2s ease;
-}
-
-.btn-delete:hover {
-  background-color: #dc2626; /* Vermelho escuro */
-}
-
-.no-events {
-  text-align: center;
-  color: #6b7280; /* Cinza */
-  margin-top: 20px;
 }

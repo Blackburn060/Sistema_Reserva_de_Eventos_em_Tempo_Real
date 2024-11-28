@@ -5,5 +5,5 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 export const routes: Routes = [
   { path: 'eventos', component: EventListComponent },
   { path: 'admin', component: AdminPanelComponent },
-  { path: '**', redirectTo: 'eventos' } // Redirecionar rotas inválidas
+  { path: '**', redirectTo: 'eventos' },
 ];

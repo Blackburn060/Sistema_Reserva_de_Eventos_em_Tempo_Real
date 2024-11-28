@@ -1,0 +1,18 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+      <h3>Confirme sua Reserva</h3>
+      <p>Evento: <strong>{{ event.name }}</strong></p>
+      <form>
+        <label for="name">Nome:</label>
+        <input id="name" type="text" [(ngModel)]="userName" name="userName" required />
+  
+        <label for="phone">Telefone:</label>
+        <input id="phone" type="text" [(ngModel)]="userPhone" name="userPhone" required />
+      </form>
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="onConfirm()">Confirmar</button>
+        <button mat-raised-button color="warn" (click)="onClose()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+  

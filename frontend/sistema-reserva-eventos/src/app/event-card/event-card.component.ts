@@ -1,19 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common'; // Importando o DatePipe para corrigir o erro do pipe
 
 @Component({
   selector: 'app-event-card',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, CommonModule],
+  imports: [MatCardModule, DatePipe], // Incluindo o DatePipe
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.css'],
 })
 export class EventCardComponent {
   @Input() event: any;
+  @Output() reserve = new EventEmitter<any>();
 
-  reserve() {
-    console.log('Reserva feita para o evento:', this.event.name);
+  onReserve() {
+    this.reserve.emit(this.event);
   }
 }
