@@ -15,6 +15,7 @@ export class AdminPanelComponent implements OnInit {
   newEvent = { name: '', slots: 0, date: '' };
   maxUsers = 3;
   choiceTimeout = 30;
+  reservationTimeout = 120;
 
   constructor(private http: HttpClient) {}
 
@@ -33,11 +34,16 @@ export class AdminPanelComponent implements OnInit {
     this.http.get<any>('http://localhost:8000/settings').subscribe((settings) => {
       this.maxUsers = settings.maxUsers;
       this.choiceTimeout = settings.choiceTimeout;
+      this.reservationTimeout = settings.reservationTimeout;
     });
   }
 
   saveSettings() {
-    const settings = { maxUsers: this.maxUsers, choiceTimeout: this.choiceTimeout };
+    const settings = {
+      maxUsers: this.maxUsers,
+      choiceTimeout: this.choiceTimeout,
+      reservationTimeout: this.reservationTimeout,
+    };
     this.http.post('http://localhost:8000/settings', settings).subscribe(() => {
       alert('Configurações atualizadas!');
     });

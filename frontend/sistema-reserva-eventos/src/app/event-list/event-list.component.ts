@@ -5,11 +5,18 @@ import { FormsModule } from '@angular/forms';
 import { EventCardComponent } from '../event-card/event-card.component';
 import { ReservationModalComponent } from '../reservation-modal/reservation-modal.component';
 import { SocketService } from '../socket.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-event-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, EventCardComponent, ReservationModalComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    EventCardComponent,
+    ReservationModalComponent,
+    MatIconModule,
+  ],
   templateUrl: './event-list.component.html',
   styleUrls: ['./event-list.component.css'],
 })
@@ -19,8 +26,9 @@ export class EventListComponent implements OnInit {
   queue: string[] = [];
   timers: { [key: string]: number } = {};
   selectedEvent: any = null;
-  maxUsers: number = 3;  // Valor padrão
-  choiceTimeout: number = 30;  // Valor padrão
+  maxUsers: number = 3;
+  choiceTimeout: number = 30;
+  reservationTimeout: number = 120;
 
   constructor(private http: HttpClient, private socketService: SocketService) {}
 
@@ -30,18 +38,17 @@ export class EventListComponent implements OnInit {
     this.setupSocketListeners();
   }
 
-  // Carrega os eventos do backend
   loadEvents() {
     this.http.get<any[]>('http://localhost:8000/events').subscribe((data) => {
       this.events = data;
     });
   }
 
-  // Carrega as configurações de Máx. Usuários e Tempo de Escolha
   loadSettings() {
     this.http.get<any>('http://localhost:8000/settings').subscribe((settings) => {
-      this.maxUsers = settings.maxUsers;  // Ajusta a configuração carregada
-      this.choiceTimeout = settings.choiceTimeout;  // Ajusta o tempo de escolha
+      this.maxUsers = settings.maxUsers;
+      this.choiceTimeout = settings.choiceTimeout;
+      this.reservationTimeout = settings.reservationTimeout;
     });
   }
 
@@ -66,10 +73,35 @@ export class EventListComponent implements OnInit {
     this.socketService.on('timer_update', (data) => {
       this.timers[data.sid] = data.time_remaining;
     });
+
+    this.socketService.on('event_updated', (data) => {
+      this.updateEventSlots(data);
+    });
+
+    this.socketService.on('reservation_confirmed', (data) => {
+      console.log(`Reserva confirmada para usuário ${data.user} no evento ${data.eventId}`);
+    });
+
+    this.socketService.on('reservation_timeout', (data) => {
+      if (this.selectedEvent && this.selectedEvent.id === data.eventId) {
+        this.selectedEvent = null;
+      }
+    });
+
+    this.socketService.on('error', (data) => {
+      console.error(data.message);
+      alert(data.message);
+    });
   }
 
   onReserve(event: any) {
-    this.selectedEvent = event;
+    this.socketService.emit('reserve', { eventId: event.id }, (response: any) => {
+      if (response.success) {
+        this.selectedEvent = { ...event, reservationTimeout: this.reservationTimeout };
+      } else {
+        alert(response.message);
+      }
+    });
   }
 
   onConfirmReservation(userData: { name: string; phone: string }) {
@@ -83,7 +115,25 @@ export class EventListComponent implements OnInit {
     }
   }
 
+  onCancelReservation() {
+    if (this.selectedEvent) {
+      this.socketService.emit('cancel_reservation', {
+        eventId: this.selectedEvent.id,
+      });
+      this.selectedEvent = null;
+    }
+  }
+
   onCloseModal() {
-    this.selectedEvent = null;
+    if (this.selectedEvent) {
+      this.onCancelReservation();
+    }
+  }
+
+  updateEventSlots(eventData: any) {
+    const updatedEvent = this.events.find((e) => e.id === eventData.id);
+    if (updatedEvent) {
+      updatedEvent.slots = eventData.slots;
+    }
   }
 }

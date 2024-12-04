@@ -1,18 +1,27 @@
 <div class="modal-overlay">
-    <div class="modal-content">
-      <h3>Confirme sua Reserva</h3>
-      <p>Evento: <strong>{{ event.name }}</strong></p>
-      <form>
-        <label for="name">Nome:</label>
-        <input id="name" type="text" [(ngModel)]="userName" name="userName" required />
-  
-        <label for="phone">Telefone:</label>
-        <input id="phone" type="text" [(ngModel)]="userPhone" name="userPhone" required />
-      </form>
-      <div class="actions">
-        <button mat-raised-button color="primary" (click)="onConfirm()">Confirmar</button>
-        <button mat-raised-button color="warn" (click)="onClose()">Cancelar</button>
+  <div class="modal-content">
+    <h3><mat-icon>check_circle</mat-icon> Confirme sua Reserva</h3>
+    <p><mat-icon>event</mat-icon> Evento: <strong>{{ event.name }}</strong></p>
+
+    <form class="reservation-form">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput [(ngModel)]="userName" name="userName" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Telefone</mat-label>
+        <input matInput [(ngModel)]="userPhone" name="userPhone" required />
+      </mat-form-field>
+
+      <div class="timer">
+        <p><mat-icon>timer</mat-icon> Tempo restante para confirmar: <strong>{{ remainingTime }}s</strong></p>
       </div>
-    </div>
+
+      <div class="actions">
+        <button mat-raised-button color="primary" (click)="onConfirm()" [disabled]="!userName || !userPhone">Confirmar</button>
+        <button mat-raised-button color="warn" (click)="onCancel()">Cancelar</button>
+      </div>
+    </form>
   </div>
-  
+</div>

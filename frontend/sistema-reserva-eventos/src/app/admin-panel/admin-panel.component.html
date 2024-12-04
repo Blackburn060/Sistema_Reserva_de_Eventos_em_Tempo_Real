@@ -1,7 +1,6 @@
 <div class="container">
   <h2 class="title">Administração de Eventos</h2>
 
-  <!-- Formulário de Criação de Eventos -->
   <form (submit)="createEvent()" class="form">
     <div class="form-group">
       <label for="eventName">Nome do Evento:</label>
@@ -39,7 +38,6 @@
     <button type="submit" class="btn-create">Criar Evento</button>
   </form>
 
-  <!-- Configurações do Sistema -->
   <div class="settings">
     <h3>Configurações do Sistema</h3>
     <div class="form-group">
@@ -62,16 +60,25 @@
         required
       />
     </div>
+    <div class="form-group">
+      <label for="reservationTimeout">Tempo de Reserva (segundos):</label>
+      <input
+        id="reservationTimeout"
+        type="number"
+        [(ngModel)]="reservationTimeout"
+        placeholder="Tempo de Reserva (segundos)"
+        required
+      />
+    </div>
     <button class="btn-save" (click)="saveSettings()">Salvar Configurações</button>
   </div>
 
-  <!-- Lista de Eventos -->
   <div class="events-list">
-    <h3>Eventos Cadastrados</h3>
+    <h3 class="subtitle">Eventos Cadastrados</h3>
     <div *ngIf="events.length > 0">
       <div class="event-item" *ngFor="let event of events">
         <span>{{ event.name }} - {{ event.slots }} vagas - {{ event.date | date: 'dd/MM/yyyy' }}</span>
-        <button (click)="deleteEvent(event.id)">Excluir</button>
+        <button class="btn-delete" (click)="deleteEvent(event.id)">Excluir</button>
       </div>
     </div>
     <p *ngIf="events.length === 0">Nenhum evento cadastrado no momento.</p>

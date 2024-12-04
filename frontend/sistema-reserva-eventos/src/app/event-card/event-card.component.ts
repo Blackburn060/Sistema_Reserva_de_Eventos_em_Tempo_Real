@@ -1,11 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { DatePipe } from '@angular/common'; // Importando o DatePipe para corrigir o erro do pipe
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-event-card',
   standalone: true,
-  imports: [MatCardModule, DatePipe], // Incluindo o DatePipe
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './event-card.component.html',
   styleUrls: ['./event-card.component.css'],
 })
